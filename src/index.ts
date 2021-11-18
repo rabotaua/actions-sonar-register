@@ -9,12 +9,13 @@ const run = async () => {
   const githubOrganization = github.context.payload.repository?.owner.login;
   const repositoryName = github.context.payload.repository?.name;
   const mainBranchName = github.context.payload.repository?.default_branch;
-  const key = `${githubOrganization}_${repositoryName}`;
 
   if (!githubOrganization || !repositoryName) {
     core.debug(JSON.stringify(github.context.payload, null, 2));
     throw new Error("Unable to retrieve organization name and/or repository names");
   }
+
+  const key = `${githubOrganization}_${repositoryName}`;
 
   core.info(`org: ${org}`);
   core.info(`token: ${token}`);
