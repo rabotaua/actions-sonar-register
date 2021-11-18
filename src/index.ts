@@ -9,6 +9,7 @@ const run = async () => {
   const githubOrganization = github.context.payload.repository?.owner.login;
   const repositoryName = github.context.payload.repository?.name;
   const mainBranchName = github.context.payload.repository?.default_branch;
+  const key = `${githubOrganization}_${repositoryName}`;
 
   if (!githubOrganization || !repositoryName) {
     core.debug(JSON.stringify(github.context.payload, null, 2));
@@ -20,10 +21,12 @@ const run = async () => {
   core.info(`github: ${githubOrganization}`);
   core.info(`repo: ${repositoryName}`);
   core.info(`branch: ${mainBranchName}`);
+  core.info(`key: ${key}`);
 
   const client = new SonarCloudClient(org, token);
   await client.register(githubOrganization, repositoryName, mainBranchName);
 
+  core.setOutput("key", key);
   core.info(`${SONAR_URL}/project/overview?id=${githubOrganization}_${repositoryName}`);
 };
 

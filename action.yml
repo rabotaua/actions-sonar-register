@@ -8,6 +8,9 @@ inputs:
     description: "sonar organization"
     required: false
     default: "rua"
+outputs:
+  key:
+    description: "sonar project key"
 runs:
   using: "node12"
   main: "dist/index.js"
