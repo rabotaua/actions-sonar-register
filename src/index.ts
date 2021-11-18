@@ -15,6 +15,12 @@ const run = async () => {
     throw new Error("Unable to retrieve organization name and/or repository names");
   }
 
+  core.info(`org: ${org}`);
+  core.info(`token: ${token}`);
+  core.info(`github: ${githubOrganization}`);
+  core.info(`repo: ${repositoryName}`);
+  core.info(`branch: ${mainBranchName}`);
+
   const client = new SonarCloudClient(org, token);
   await client.register(githubOrganization, repositoryName, mainBranchName);
 

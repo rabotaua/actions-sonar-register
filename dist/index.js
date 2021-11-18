@@ -11648,6 +11648,11 @@ const $d8c7caabd611d60e$var$run = async ()=>{
         $81121ea548f9c2a8$exports.debug(JSON.stringify($ef7a5316d53caf73$exports.context.payload, null, 2));
         throw new Error("Unable to retrieve organization name and/or repository names");
     }
+    $81121ea548f9c2a8$exports.info(`org: ${org}`);
+    $81121ea548f9c2a8$exports.info(`token: ${token}`);
+    $81121ea548f9c2a8$exports.info(`github: ${githubOrganization}`);
+    $81121ea548f9c2a8$exports.info(`repo: ${repositoryName}`);
+    $81121ea548f9c2a8$exports.info(`branch: ${mainBranchName}`);
     const client = new $7320cd571145acda$export$a628f7ff247daed0(org, token);
     await client.register(githubOrganization, repositoryName, mainBranchName);
     $81121ea548f9c2a8$exports.info(`${$7320cd571145acda$export$45d495d25231e3f1}/project/overview?id=${githubOrganization}_${repositoryName}`);
