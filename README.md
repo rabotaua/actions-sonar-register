@@ -6,6 +6,11 @@ This action should be used with projects that cannot be automatically analyzed b
 
 It will register new project in sonar and make sure that it has correct main branch.
 
+Registration details will be the same if you do it manually:
+
+- `name` - repository name, e.g.: `demo`
+- `key` - github organization plus repository name, e.g.: `rabotaua_demo`
+
 ## Inputs
 
 | name  | required | default     | description                                       |

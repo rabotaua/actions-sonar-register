@@ -11637,19 +11637,22 @@ class $7320cd571145acda$export$a628f7ff247daed0 {
 }
 
 
-try {
+const $d8c7caabd611d60e$var$run = async ()=>{
+    var ref, ref1, ref2;
     const token = $81121ea548f9c2a8$exports.getInput("token");
     const org = $81121ea548f9c2a8$exports.getInput("org");
-    const client = new $7320cd571145acda$export$a628f7ff247daed0($ef7a5316d53caf73$exports.context.repo.owner, $81121ea548f9c2a8$exports.getInput("token"));
-    // client.register(core.getInput("org"), github.context.repo.repo, xx);
-    console.log({
-        token: token,
-        org: org,
-        client: client
-    });
-    console.log(JSON.stringify($ef7a5316d53caf73$exports.context, null, 4));
-} catch (error) {
-    $81121ea548f9c2a8$exports.setFailed(error.message);
-}
+    const githubOrganization = (ref = $ef7a5316d53caf73$exports.context.payload.repository) === null || ref === void 0 ? void 0 : ref.owner.login;
+    const repositoryName = (ref1 = $ef7a5316d53caf73$exports.context.payload.repository) === null || ref1 === void 0 ? void 0 : ref1.name;
+    const mainBranchName = (ref2 = $ef7a5316d53caf73$exports.context.payload.repository) === null || ref2 === void 0 ? void 0 : ref2.default_branch;
+    if (!githubOrganization || !repositoryName) {
+        $81121ea548f9c2a8$exports.debug(JSON.stringify($ef7a5316d53caf73$exports.context.payload, null, 2));
+        throw new Error("Unable to retrieve organization name and/or repository names");
+    }
+    const client = new $7320cd571145acda$export$a628f7ff247daed0(org, token);
+    await client.register(githubOrganization, repositoryName, mainBranchName);
+    $81121ea548f9c2a8$exports.info(`${$7320cd571145acda$export$45d495d25231e3f1}/project/overview?id=${githubOrganization}_${repositoryName}`);
+};
+$d8c7caabd611d60e$var$run().catch((error)=>$81121ea548f9c2a8$exports.setFailed(error.message)
+);
 
 
