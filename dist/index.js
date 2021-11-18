@@ -11575,14 +11575,28 @@ class $7320cd571145acda$export$a628f7ff247daed0 {
     async register(githubOrganization, repositoryName, mainBranchName) {
         const project = `${githubOrganization}_${repositoryName}`;
         try {
+            console.log(`going to search "${repositoryName}" in projects`);
             const { components: components  } = await this.searchProjects(this.org, repositoryName);
+            console.log(`received ${components.length} results`);
             const found = components.find(({ key: key , name: name  })=>key === project && name === repositoryName
             );
-            if (!found) await this.createProject(repositoryName, project, this.org);
+            if (!found) {
+                console.log(`project not found, going to register`);
+                await this.createProject(repositoryName, project, this.org);
+                console.log(`project successfully registered`);
+            }
+            console.log("retrieving branches");
             const { branches: branches  } = await this.getBranches(project);
+            console.log(`retrieved ${branches.length} branches`);
             if (branches.find(({ name: name , isMain: isMain  })=>name === mainBranchName && isMain === false
-            )) await this.deleteBranch(project, mainBranchName);
+            )) {
+                console.log("deleting branch");
+                await this.deleteBranch(project, mainBranchName);
+                console.log("deleted branch");
+            }
+            console.log("renaming branch");
             await this.renameBranch(project, mainBranchName);
+            console.log("renamed branch");
         } catch (error) {
             $7320cd571145acda$export$a628f7ff247daed0.handle(error);
         }
