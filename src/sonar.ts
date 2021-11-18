@@ -68,26 +68,16 @@ export class SonarCloudClient {
   public async register(githubOrganization: string, repositoryName: string, mainBranchName: string): Promise<void> {
     const project = `${githubOrganization}_${repositoryName}`;
     try {
-      console.log(`going to search "${repositoryName}" in projects`);
       const { components } = await this.searchProjects(this.org, repositoryName);
-      console.log(`received ${components.length} results`);
       const found = components.find(({ key, name }) => key === project && name === repositoryName);
       if (!found) {
-        console.log(`project not found, going to register`);
         await this.createProject(repositoryName, project, this.org);
-        console.log(`project successfully registered`);
       }
-      console.log("retrieving branches");
       const { branches } = await this.getBranches(project);
-      console.log(`retrieved ${branches.length} branches`);
       if (branches.find(({ name, isMain }) => name === mainBranchName && isMain === false)) {
-        console.log("deleting branch");
         await this.deleteBranch(project, mainBranchName);
-        console.log("deleted branch");
       }
-      console.log("renaming branch");
       await this.renameBranch(project, mainBranchName);
-      console.log("renamed branch");
     } catch (error: Error | AxiosError | any) {
       SonarCloudClient.handle(error);
     }
