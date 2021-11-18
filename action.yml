@@ -4,6 +4,10 @@ inputs:
   token:
     description: "sonar token"
     required: true
+  org:
+    description: "sonar organization"
+    required: false
+    default: "rua"
 runs:
   using: "node12"
   main: "dist/index.js"
