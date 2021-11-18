@@ -59,6 +59,9 @@ export class SonarCloudClient {
       baseURL: SONAR_URL,
       timeout: 5000,
       auth: { username: this.token, password: "" },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
     });
   }
 
@@ -96,7 +99,11 @@ export class SonarCloudClient {
   }
 
   private async createProject(name: string, project: string, organization: string): Promise<void> {
-    await this.axios.post("/api/projects/create", { name, project, organization });
+    const params = new URLSearchParams();
+    params.append("name", name);
+    params.append("project", project);
+    params.append("organization", organization);
+    await this.axios.post("/api/projects/create", params);
   }
 
   private async getBranches(project: string): Promise<SonarBranchesListResponse> {
@@ -105,7 +112,10 @@ export class SonarCloudClient {
   }
 
   private async deleteBranch(project: string, branch: string): Promise<void> {
-    await this.axios.post("/api/project_branches/delete", { project, branch });
+    const params = new URLSearchParams();
+    params.append("project", project);
+    params.append("branch", branch);
+    await this.axios.post("/api/project_branches/delete", params);
   }
 
   private async renameBranch(project: string, name: string): Promise<void> {

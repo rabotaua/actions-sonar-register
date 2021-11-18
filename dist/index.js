@@ -11569,6 +11569,9 @@ class $7320cd571145acda$export$a628f7ff247daed0 {
             auth: {
                 username: this.token,
                 password: ""
+            },
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
             }
         });
     }
@@ -11611,11 +11614,11 @@ class $7320cd571145acda$export$a628f7ff247daed0 {
         return data;
     }
     async createProject(name, project, organization1) {
-        await this.axios.post("/api/projects/create", {
-            name: name,
-            project: project,
-            organization: organization1
-        });
+        const params = new URLSearchParams();
+        params.append("name", name);
+        params.append("project", project);
+        params.append("organization", organization1);
+        await this.axios.post("/api/projects/create", params);
     }
     async getBranches(project1) {
         const { data: data  } = await this.axios.get("/api/project_branches/list", {
@@ -11626,10 +11629,10 @@ class $7320cd571145acda$export$a628f7ff247daed0 {
         return data;
     }
     async deleteBranch(project2, branch) {
-        await this.axios.post("/api/project_branches/delete", {
-            project: project2,
-            branch: branch
-        });
+        const params = new URLSearchParams();
+        params.append("project", project2);
+        params.append("branch", branch);
+        await this.axios.post("/api/project_branches/delete", params);
     }
     async renameBranch(project3, name1) {
         await this.axios.post("/api/project_branches/rename", null, {
