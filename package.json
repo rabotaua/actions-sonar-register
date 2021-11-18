@@ -1,0 +1,74 @@
+{
+  "name": "actions-sonar-register",
+  "version": "1.0.0",
+  "description": "GitHub Action to Register Repository in SonarCloud",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "parcel build",
+    "lint": "eslint src/**/*.ts --fix",
+    "format": "prettier --write .",
+    "outdated": "npx npm-check-updates",
+    "upgrade": "npm run outdated -- -u",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix",
+    "*.{ts,json,md,yml}": "prettier --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rabotaua/actions-sonar-register.git"
+  },
+  "targets": {
+    "default": {
+      "context": "node",
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": false,
+      "includeNodeModules": true,
+      "sourceMap": false,
+      "source": "src/index.ts",
+      "distDir": "./dist",
+      "engines": {
+        "node": "12"
+      }
+    }
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "sonarcloud"
+  ],
+  "author": "Alexandr Marchenko <marchenko.alexandr@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rabotaua/actions-sonar-register/issues"
+  },
+  "homepage": "https://github.com/rabotaua/actions-sonar-register#readme",
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "lint-staged": "^12.0.2",
+    "nock": "^13.2.1",
+    "parcel": "^2.0.1",
+    "prettier": "^2.4.1",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0",
+    "axios": "^0.24.0"
+  }
+}

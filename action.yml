@@ -1,0 +1,9 @@
+name: "SonarCloud Register"
+description: "GitHub Action to Register Repository in SonarCloud"
+inputs:
+  token:
+    description: "sonar token"
+    required: true
+runs:
+  using: "node12"
+  main: "index.js"
