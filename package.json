@@ -2,7 +2,8 @@
   "name": "actions-sonar-register",
   "version": "1.0.0",
   "description": "GitHub Action to Register Repository in SonarCloud",
-  "main": "index.js",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "parcel build",
