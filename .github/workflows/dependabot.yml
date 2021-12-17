@@ -23,7 +23,6 @@ jobs:
         run: |
           if git status --short | grep -q package
           then
-            chmod +x .husky/pre-commit
             git config user.name dependabot
             git config user.email dependabot@github.com
             git add .
