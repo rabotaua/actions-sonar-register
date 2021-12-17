@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - uses: actions/setup-node@v2
         with:
           node-version: 14
@@ -24,12 +26,9 @@ jobs:
             chmod +x .husky/pre-commit
             git config user.name dependabot
             git config user.email dependabot@github.com
-            git add package-lock.json
-            git add package.json
+            git add .
             git commit -m "dependabot"
             git push
           else
             git status --short
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
