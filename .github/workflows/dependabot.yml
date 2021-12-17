@@ -11,17 +11,22 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
+
+      - run: npx npm-check-updates
+      - run: npx npm-check-updates -u
       - run: npm install
-      - run: npm run outdated
-      - run: npm run upgrade
-      - run: npm install
-      - name: git config
+      - run: npm test
+
+      - name: git commit package.json if needed
         run: |
-          git config user.name actions
-          git config user.email actions@github.com
-      - name: git commit package.json
-        run: |
-          git add package-lock.json
-          git add package.json
-          git commit -m "dependabot"
-          git push
+          if git status --short | grep -q package
+          then
+            git config user.name dependabot
+            git config user.email dependabot@github.com
+            git add package-lock.json
+            git add package.json
+            git commit -m "dependabot"
+            git push
+          else
+            git status --short
+          fi
