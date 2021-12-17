@@ -21,6 +21,7 @@ jobs:
         run: |
           if git status --short | grep -q package
           then
+            chmod +x .husky/pre-commit
             git config user.name dependabot
             git config user.email dependabot@github.com
             git add package-lock.json
@@ -30,3 +31,5 @@ jobs:
           else
             git status --short
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
