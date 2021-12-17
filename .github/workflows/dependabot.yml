@@ -1,0 +1,27 @@
+name: dependabot
+on:
+  schedule:
+    - cron: 0 10 * * 3
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm install
+      - run: npm run outdated
+      - run: npm run upgrade
+      - run: npm install
+      - name: git config
+        run: |
+          git config user.name actions
+          git config user.email actions@github.com
+      - name: git commit package.json
+        run: |
+          git add package-lock.json
+          git add package.json
+          git commit -m "dependabot"
+          git push
