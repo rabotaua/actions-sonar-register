@@ -7955,9 +7955,14 @@ Object.defineProperties($8dafdd0617a538ba$export$7fa6c5b6f8193917.prototype, {
 $8dafdd0617a538ba$var$AbortError.prototype = Object.create(Error.prototype);
 $8dafdd0617a538ba$var$AbortError.prototype.constructor = $8dafdd0617a538ba$var$AbortError;
 $8dafdd0617a538ba$var$AbortError.prototype.name = 'AbortError';
+const $8dafdd0617a538ba$var$URL$1 = ($parcel$interopDefault($3B1P3$url)).URL || (/*@__PURE__*/$parcel$interopDefault($e755159f69cf711e$exports)).URL;
 // fix an issue where "PassThrough", "resolve" aren't a named export for node <10
 const $8dafdd0617a538ba$var$PassThrough$1 = ($parcel$interopDefault($3B1P3$stream)).PassThrough;
-const $8dafdd0617a538ba$var$resolve_url = ($parcel$interopDefault($3B1P3$url)).resolve;
+const $8dafdd0617a538ba$var$isDomainOrSubdomain = function isDomainOrSubdomain(destination, original) {
+    const orig = new $8dafdd0617a538ba$var$URL$1(original).hostname;
+    const dest = new $8dafdd0617a538ba$var$URL$1(destination).hostname;
+    return orig === dest || orig[orig.length - dest.length - 1] === '.' && orig.endsWith(dest);
+};
 /**
  * Fetch function
  *
@@ -8018,7 +8023,19 @@ const $8dafdd0617a538ba$var$resolve_url = ($parcel$interopDefault($3B1P3$url)).r
                 // HTTP fetch step 5.2
                 const location = headers.get('Location');
                 // HTTP fetch step 5.3
-                const locationURL = location === null ? null : $8dafdd0617a538ba$var$resolve_url(request.url, location);
+                let locationURL = null;
+                try {
+                    locationURL = location === null ? null : new $8dafdd0617a538ba$var$URL$1(location, request.url).toString();
+                } catch (err) {
+                    // error here can only be invalid URL in Location: header
+                    // do not throw when options.redirect == manual
+                    // let the user extract the errorneous redirect URL
+                    if (request.redirect !== 'manual') {
+                        reject(new $8dafdd0617a538ba$export$26e841bcf1aeb894(`uri requested responds with an invalid redirect URL: ${location}`, 'invalid-redirect'));
+                        finalize();
+                        return;
+                    }
+                }
                 // HTTP fetch step 5.5
                 switch(request.redirect){
                     case 'error':
@@ -8030,9 +8047,9 @@ const $8dafdd0617a538ba$var$resolve_url = ($parcel$interopDefault($3B1P3$url)).r
                         if (locationURL !== null) // handle corrupted header
                         try {
                             headers.set('Location', locationURL);
-                        } catch (err) {
+                        } catch (err1) {
                             // istanbul ignore next: nodejs server prevent invalid response headers, we can't test this through normal request
-                            reject(err);
+                            reject(err1);
                         }
                         break;
                     case 'follow':
@@ -8058,6 +8075,12 @@ const $8dafdd0617a538ba$var$resolve_url = ($parcel$interopDefault($3B1P3$url)).r
                             timeout: request.timeout,
                             size: request.size
                         };
+                        if (!$8dafdd0617a538ba$var$isDomainOrSubdomain(request.url, locationURL)) for (const name of [
+                            'authorization',
+                            'www-authenticate',
+                            'cookie',
+                            'cookie2'
+                        ])requestOpts.headers.delete(name);
                         // HTTP-redirect fetch step 9
                         if (res.statusCode !== 303 && request.body && $8dafdd0617a538ba$var$getTotalBytes(request) === null) {
                             reject(new $8dafdd0617a538ba$export$26e841bcf1aeb894('Cannot follow redirect with body being a readable stream', 'unsupported-redirect'));
