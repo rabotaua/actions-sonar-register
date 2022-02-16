@@ -2873,7 +2873,6 @@ var $53857e2dfeafc3e3$var$validators = $esggj.validators;
         config.url = configOrUrl;
     } else config = configOrUrl || {
     };
-    if (!config.url) throw new Error('Provided config url is not valid');
     config = $cARv8(this.defaults, config);
     // Set config.method
     if (config.method) config.method = config.method.toLowerCase();
@@ -2929,7 +2928,6 @@ var $53857e2dfeafc3e3$var$validators = $esggj.validators;
     return promise;
 };
 $53857e2dfeafc3e3$var$Axios.prototype.getUri = function getUri(config) {
-    if (!config.url) throw new Error('Provided config url is not valid');
     config = $cARv8(this.defaults, config);
     return $a0IXt(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
 };
@@ -3828,6 +3826,15 @@ var $03094e288d107255$var$isHttps = /https:?/;
         if (auth && headerNames.authorization) delete headers[headerNames.authorization];
         var isHttpsRequest = $03094e288d107255$var$isHttps.test(protocol);
         var agent = isHttpsRequest ? config.httpsAgent : config.httpAgent;
+        try {
+            $a0IXt(parsed.path, config.params, config.paramsSerializer).replace(/^\?/, '');
+        } catch (err1) {
+            var customErr = new Error(err1.message);
+            customErr.config = config;
+            customErr.url = config.url;
+            customErr.exists = true;
+            reject(customErr);
+        }
         var options = {
             path: $a0IXt(parsed.path, config.params, config.paramsSerializer).replace(/^\?/, ''),
             method: config.method.toUpperCase(),
@@ -3984,8 +3991,11 @@ var $03094e288d107255$var$isHttps = /https:?/;
             // ClientRequest.setTimeout will be fired on the specify milliseconds, and can make sure that abort() will be fired after connect.
             req.setTimeout(timeout, function handleRequestTimeout() {
                 req.abort();
+                var timeoutErrorMessage = '';
+                if (config.timeoutErrorMessage) timeoutErrorMessage = config.timeoutErrorMessage;
+                else timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
                 var transitional = config.transitional || $YeZBW.transitional;
-                reject($7u25G('timeout of ' + timeout + 'ms exceeded', config, transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED', req));
+                reject($7u25G(timeoutErrorMessage, config, transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED', req));
             });
         }
         if (config.cancelToken || config.signal) {
@@ -4320,8 +4330,8 @@ $f09e5f9d63c3906a$var$RedirectableRequest.prototype._processResponse = function(
         this._isRedirect = true;
         var redirectUrlParts = $3B1P3$url.parse(redirectUrl);
         Object.assign(this._options, redirectUrlParts);
-        // Drop the confidential headers when redirecting to another domain
-        if (!(redirectUrlParts.host === currentHost || $f09e5f9d63c3906a$var$isSubdomainOf(redirectUrlParts.host, currentHost))) $f09e5f9d63c3906a$var$removeMatchingHeaders(/^(?:authorization|cookie)$/i, this._options.headers);
+        // Drop confidential headers when redirecting to another scheme:domain
+        if (redirectUrlParts.protocol !== currentUrlParts.protocol || !$f09e5f9d63c3906a$var$isSameOrSubdomain(redirectUrlParts.host, currentHost)) $f09e5f9d63c3906a$var$removeMatchingHeaders(/^(?:authorization|cookie)$/i, this._options.headers);
         // Evaluate the beforeRedirect callback
         if (typeof this._options.beforeRedirect === "function") {
             var responseDetails = {
@@ -4464,7 +4474,8 @@ function $f09e5f9d63c3906a$var$abortRequest(request) {
     request.on("error", $f09e5f9d63c3906a$var$noop);
     request.abort();
 }
-function $f09e5f9d63c3906a$var$isSubdomainOf(subdomain, domain) {
+function $f09e5f9d63c3906a$var$isSameOrSubdomain(subdomain, domain) {
+    if (subdomain === domain) return true;
     const dot = subdomain.length - domain.length - 1;
     return dot > 0 && subdomain[dot] === "." && subdomain.endsWith(domain);
 }
@@ -5336,7 +5347,7 @@ module.exports = (flag, argv)=>{
 
 parcelRequire.register("fT62h", function(module, exports) {
 module.exports = {
-    "version": "0.25.0"
+    "version": "0.26.0"
 };
 
 });
