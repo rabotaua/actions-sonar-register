@@ -2508,7 +2508,7 @@ var $7aA86 = parcelRequire("7aA86");
 
 var $cARv8 = parcelRequire("cARv8");
 
-var $YeZBW = parcelRequire("YeZBW");
+var $aRENP = parcelRequire("aRENP");
 /**
  * Create an instance of Axios
  *
@@ -2528,7 +2528,7 @@ var $YeZBW = parcelRequire("YeZBW");
     return instance;
 }
 // Create the default instance to be exported
-var $80d94e926fdaacef$var$axios = $80d94e926fdaacef$var$createInstance($YeZBW);
+var $80d94e926fdaacef$var$axios = $80d94e926fdaacef$var$createInstance($aRENP);
 // Expose Axios class to allow class inheritance
 $80d94e926fdaacef$var$axios.Axios = $7aA86;
 
@@ -3064,7 +3064,7 @@ var $5cgPH = parcelRequire("5cgPH");
 
 var $jara4 = parcelRequire("jara4");
 
-var $YeZBW = parcelRequire("YeZBW");
+var $aRENP = parcelRequire("aRENP");
 
 var $ipNKw = parcelRequire("ipNKw");
 /**
@@ -3100,7 +3100,7 @@ var $ipNKw = parcelRequire("ipNKw");
     ], function cleanHeaderConfig(method) {
         delete config.headers[method];
     });
-    var adapter = config.adapter || $YeZBW.adapter;
+    var adapter = config.adapter || $aRENP.adapter;
     return adapter(config).then(function onAdapterResolution(response) {
         $760981fd1d750568$var$throwIfCancellationRequested(config);
         // Transform response data
@@ -3122,7 +3122,7 @@ parcelRequire.register("5cgPH", function(module, exports) {
 
 var $jUuIM = parcelRequire("jUuIM");
 
-var $YeZBW = parcelRequire("YeZBW");
+var $aRENP = parcelRequire("aRENP");
 /**
  * Transform the data for a request or a response
  *
@@ -3131,7 +3131,7 @@ var $YeZBW = parcelRequire("YeZBW");
  * @param {Array|Function} fns A single function or Array of functions
  * @returns {*} The resulting transformed data
  */ module.exports = function transformData(data, headers, fns) {
-    var context = this || $YeZBW;
+    var context = this || $aRENP;
     /*eslint no-param-reassign:0*/ $jUuIM.forEach(fns, function transform(fn) {
         data = fn.call(context, data, headers);
     });
@@ -3139,7 +3139,7 @@ var $YeZBW = parcelRequire("YeZBW");
 };
 
 });
-parcelRequire.register("YeZBW", function(module, exports) {
+parcelRequire.register("aRENP", function(module, exports) {
 'use strict';
 
 var $jUuIM = parcelRequire("jUuIM");
@@ -3147,15 +3147,17 @@ var $jUuIM = parcelRequire("jUuIM");
 var $jMTXf = parcelRequire("jMTXf");
 
 var $684iP = parcelRequire("684iP");
-var $0b513bf431799494$var$DEFAULT_CONTENT_TYPE = {
+
+var $6aErz = parcelRequire("6aErz");
+var $7e8e8128998e2070$var$DEFAULT_CONTENT_TYPE = {
     'Content-Type': 'application/x-www-form-urlencoded'
 };
-function $0b513bf431799494$var$setContentTypeIfUnset(headers, value) {
+function $7e8e8128998e2070$var$setContentTypeIfUnset(headers, value) {
     if (!$jUuIM.isUndefined(headers) && $jUuIM.isUndefined(headers['Content-Type'])) headers['Content-Type'] = value;
 }
 
 
-function $0b513bf431799494$var$getDefaultAdapter() {
+function $7e8e8128998e2070$var$getDefaultAdapter() {
     var adapter;
     if (typeof XMLHttpRequest !== 'undefined') // For browsers use XHR adapter
     adapter = (parcelRequire("e6kjn"));
@@ -3163,7 +3165,7 @@ function $0b513bf431799494$var$getDefaultAdapter() {
     adapter = (parcelRequire("ga4jJ"));
     return adapter;
 }
-function $0b513bf431799494$var$stringifySafely(rawValue, parser, encoder) {
+function $7e8e8128998e2070$var$stringifySafely(rawValue, parser, encoder) {
     if ($jUuIM.isString(rawValue)) try {
         (parser || JSON.parse)(rawValue);
         return $jUuIM.trim(rawValue);
@@ -3172,13 +3174,9 @@ function $0b513bf431799494$var$stringifySafely(rawValue, parser, encoder) {
     }
     return (encoder || JSON.stringify)(rawValue);
 }
-var $0b513bf431799494$var$defaults = {
-    transitional: {
-        silentJSONParsing: true,
-        forcedJSONParsing: true,
-        clarifyTimeoutError: false
-    },
-    adapter: $0b513bf431799494$var$getDefaultAdapter(),
+var $7e8e8128998e2070$var$defaults = {
+    transitional: $6aErz,
+    adapter: $7e8e8128998e2070$var$getDefaultAdapter(),
     transformRequest: [
         function transformRequest(data, headers) {
             $jMTXf(headers, 'Accept');
@@ -3186,19 +3184,19 @@ var $0b513bf431799494$var$defaults = {
             if ($jUuIM.isFormData(data) || $jUuIM.isArrayBuffer(data) || $jUuIM.isBuffer(data) || $jUuIM.isStream(data) || $jUuIM.isFile(data) || $jUuIM.isBlob(data)) return data;
             if ($jUuIM.isArrayBufferView(data)) return data.buffer;
             if ($jUuIM.isURLSearchParams(data)) {
-                $0b513bf431799494$var$setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+                $7e8e8128998e2070$var$setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
                 return data.toString();
             }
             if ($jUuIM.isObject(data) || headers && headers['Content-Type'] === 'application/json') {
-                $0b513bf431799494$var$setContentTypeIfUnset(headers, 'application/json');
-                return $0b513bf431799494$var$stringifySafely(data);
+                $7e8e8128998e2070$var$setContentTypeIfUnset(headers, 'application/json');
+                return $7e8e8128998e2070$var$stringifySafely(data);
             }
             return data;
         }
     ],
     transformResponse: [
         function transformResponse(data) {
-            var transitional = this.transitional || $0b513bf431799494$var$defaults.transitional;
+            var transitional = this.transitional || $7e8e8128998e2070$var$defaults.transitional;
             var silentJSONParsing = transitional && transitional.silentJSONParsing;
             var forcedJSONParsing = transitional && transitional.forcedJSONParsing;
             var strictJSONParsing = !silentJSONParsing && this.responseType === 'json';
@@ -3235,7 +3233,7 @@ $jUuIM.forEach([
     'get',
     'head'
 ], function forEachMethodNoData(method) {
-    $0b513bf431799494$var$defaults.headers[method] = {
+    $7e8e8128998e2070$var$defaults.headers[method] = {
     };
 });
 $jUuIM.forEach([
@@ -3243,9 +3241,9 @@ $jUuIM.forEach([
     'put',
     'patch'
 ], function forEachMethodWithData(method) {
-    $0b513bf431799494$var$defaults.headers[method] = $jUuIM.merge($0b513bf431799494$var$DEFAULT_CONTENT_TYPE);
+    $7e8e8128998e2070$var$defaults.headers[method] = $jUuIM.merge($7e8e8128998e2070$var$DEFAULT_CONTENT_TYPE);
 });
-module.exports = $0b513bf431799494$var$defaults;
+module.exports = $7e8e8128998e2070$var$defaults;
 
 });
 parcelRequire.register("jMTXf", function(module, exports) {
@@ -3304,6 +3302,16 @@ parcelRequire.register("684iP", function(module, exports) {
 
 });
 
+parcelRequire.register("6aErz", function(module, exports) {
+'use strict';
+module.exports = {
+    silentJSONParsing: true,
+    forcedJSONParsing: true,
+    clarifyTimeoutError: false
+};
+
+});
+
 parcelRequire.register("e6kjn", function(module, exports) {
 'use strict';
 
@@ -3323,7 +3331,7 @@ var $9itVg = parcelRequire("9itVg");
 
 var $7u25G = parcelRequire("7u25G");
 
-var $YeZBW = parcelRequire("YeZBW");
+var $6aErz = parcelRequire("6aErz");
 
 var $ipNKw = parcelRequire("ipNKw");
 module.exports = function xhrAdapter(config) {
@@ -3403,7 +3411,7 @@ module.exports = function xhrAdapter(config) {
         // Handle timeout
         request.ontimeout = function handleTimeout() {
             var timeoutErrorMessage = config.timeout ? 'timeout of ' + config.timeout + 'ms exceeded' : 'timeout exceeded';
-            var transitional = config.transitional || $YeZBW.transitional;
+            var transitional = config.transitional || $6aErz;
             if (config.timeoutErrorMessage) timeoutErrorMessage = config.timeoutErrorMessage;
             reject($7u25G(timeoutErrorMessage, config, transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED', request));
             // Clean up request
@@ -3741,7 +3749,7 @@ var $7u25G = parcelRequire("7u25G");
 
 var $684iP = parcelRequire("684iP");
 
-var $YeZBW = parcelRequire("YeZBW");
+var $6aErz = parcelRequire("6aErz");
 
 var $ipNKw = parcelRequire("ipNKw");
 var $03094e288d107255$var$isHttps = /https:?/;
@@ -3994,7 +4002,7 @@ var $03094e288d107255$var$isHttps = /https:?/;
                 var timeoutErrorMessage = '';
                 if (config.timeoutErrorMessage) timeoutErrorMessage = config.timeoutErrorMessage;
                 else timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
-                var transitional = config.transitional || $YeZBW.transitional;
+                var transitional = config.transitional || $6aErz;
                 reject($7u25G(timeoutErrorMessage, config, transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED', req));
             });
         }
@@ -4283,81 +4291,82 @@ $f09e5f9d63c3906a$var$RedirectableRequest.prototype._processResponse = function(
     // the user agent MAY automatically redirect its request to the URI
     // referenced by the Location field value,
     // even if the specific status code is not understood.
+    // If the response is not a redirect; return it as-is
     var location = response.headers.location;
-    if (location && this._options.followRedirects !== false && statusCode >= 300 && statusCode < 400) {
-        // Abort the current request
-        $f09e5f9d63c3906a$var$abortRequest(this._currentRequest);
-        // Discard the remainder of the response to avoid waiting for data
-        response.destroy();
-        // RFC7231§6.4: A client SHOULD detect and intervene
-        // in cyclical redirections (i.e., "infinite" redirection loops).
-        if (++this._redirectCount > this._options.maxRedirects) {
-            this.emit("error", new $f09e5f9d63c3906a$var$TooManyRedirectsError());
-            return;
-        }
-        // RFC7231§6.4: Automatic redirection needs to done with
-        // care for methods not known to be safe, […]
-        // RFC7231§6.4.2–3: For historical reasons, a user agent MAY change
-        // the request method from POST to GET for the subsequent request.
-        if ((statusCode === 301 || statusCode === 302) && this._options.method === "POST" || // RFC7231§6.4.4: The 303 (See Other) status code indicates that
-        // the server is redirecting the user agent to a different resource […]
-        // A user agent can perform a retrieval request targeting that URI
-        // (a GET or HEAD request if using HTTP) […]
-        statusCode === 303 && !/^(?:GET|HEAD)$/.test(this._options.method)) {
-            this._options.method = "GET";
-            // Drop a possible entity and headers related to it
-            this._requestBodyBuffers = [];
-            $f09e5f9d63c3906a$var$removeMatchingHeaders(/^content-/i, this._options.headers);
-        }
-        // Drop the Host header, as the redirect might lead to a different host
-        var currentHostHeader = $f09e5f9d63c3906a$var$removeMatchingHeaders(/^host$/i, this._options.headers);
-        // If the redirect is relative, carry over the host of the last request
-        var currentUrlParts = $3B1P3$url.parse(this._currentUrl);
-        var currentHost = currentHostHeader || currentUrlParts.host;
-        var currentUrl = /^\w+:/.test(location) ? this._currentUrl : $3B1P3$url.format(Object.assign(currentUrlParts, {
-            host: currentHost
-        }));
-        // Determine the URL of the redirection
-        var redirectUrl;
-        try {
-            redirectUrl = $3B1P3$url.resolve(currentUrl, location);
-        } catch (cause) {
-            this.emit("error", new $f09e5f9d63c3906a$var$RedirectionError(cause));
-            return;
-        }
-        // Create the redirected request
-        $97iMc("redirecting to", redirectUrl);
-        this._isRedirect = true;
-        var redirectUrlParts = $3B1P3$url.parse(redirectUrl);
-        Object.assign(this._options, redirectUrlParts);
-        // Drop confidential headers when redirecting to another scheme:domain
-        if (redirectUrlParts.protocol !== currentUrlParts.protocol || !$f09e5f9d63c3906a$var$isSameOrSubdomain(redirectUrlParts.host, currentHost)) $f09e5f9d63c3906a$var$removeMatchingHeaders(/^(?:authorization|cookie)$/i, this._options.headers);
-        // Evaluate the beforeRedirect callback
-        if (typeof this._options.beforeRedirect === "function") {
-            var responseDetails = {
-                headers: response.headers
-            };
-            try {
-                this._options.beforeRedirect.call(null, this._options, responseDetails);
-            } catch (err) {
-                this.emit("error", err);
-                return;
-            }
-            this._sanitizeOptions(this._options);
-        }
-        // Perform the redirected request
-        try {
-            this._performRequest();
-        } catch (cause1) {
-            this.emit("error", new $f09e5f9d63c3906a$var$RedirectionError(cause1));
-        }
-    } else {
-        // The response is not a redirect; return it as-is
+    if (!location || this._options.followRedirects === false || statusCode < 300 || statusCode >= 400) {
         response.responseUrl = this._currentUrl;
         response.redirects = this._redirects;
         this.emit("response", response);
         // Clean up
         this._requestBodyBuffers = [];
+        return;
+    }
+    // The response is a redirect, so abort the current request
+    $f09e5f9d63c3906a$var$abortRequest(this._currentRequest);
+    // Discard the remainder of the response to avoid waiting for data
+    response.destroy();
+    // RFC7231§6.4: A client SHOULD detect and intervene
+    // in cyclical redirections (i.e., "infinite" redirection loops).
+    if (++this._redirectCount > this._options.maxRedirects) {
+        this.emit("error", new $f09e5f9d63c3906a$var$TooManyRedirectsError());
+        return;
+    }
+    // RFC7231§6.4: Automatic redirection needs to done with
+    // care for methods not known to be safe, […]
+    // RFC7231§6.4.2–3: For historical reasons, a user agent MAY change
+    // the request method from POST to GET for the subsequent request.
+    if ((statusCode === 301 || statusCode === 302) && this._options.method === "POST" || // RFC7231§6.4.4: The 303 (See Other) status code indicates that
+    // the server is redirecting the user agent to a different resource […]
+    // A user agent can perform a retrieval request targeting that URI
+    // (a GET or HEAD request if using HTTP) […]
+    statusCode === 303 && !/^(?:GET|HEAD)$/.test(this._options.method)) {
+        this._options.method = "GET";
+        // Drop a possible entity and headers related to it
+        this._requestBodyBuffers = [];
+        $f09e5f9d63c3906a$var$removeMatchingHeaders(/^content-/i, this._options.headers);
+    }
+    // Drop the Host header, as the redirect might lead to a different host
+    var currentHostHeader = $f09e5f9d63c3906a$var$removeMatchingHeaders(/^host$/i, this._options.headers);
+    // If the redirect is relative, carry over the host of the last request
+    var currentUrlParts = $3B1P3$url.parse(this._currentUrl);
+    var currentHost = currentHostHeader || currentUrlParts.host;
+    var currentUrl = /^\w+:/.test(location) ? this._currentUrl : $3B1P3$url.format(Object.assign(currentUrlParts, {
+        host: currentHost
+    }));
+    // Determine the URL of the redirection
+    var redirectUrl;
+    try {
+        redirectUrl = $3B1P3$url.resolve(currentUrl, location);
+    } catch (cause) {
+        this.emit("error", new $f09e5f9d63c3906a$var$RedirectionError(cause));
+        return;
+    }
+    // Create the redirected request
+    $97iMc("redirecting to", redirectUrl);
+    this._isRedirect = true;
+    var redirectUrlParts = $3B1P3$url.parse(redirectUrl);
+    Object.assign(this._options, redirectUrlParts);
+    // Drop confidential headers when redirecting to a less secure protocol
+    // or to a different domain that is not a superdomain
+    if (redirectUrlParts.protocol !== currentUrlParts.protocol && redirectUrlParts.protocol !== "https:" || redirectUrlParts.host !== currentHost && !$f09e5f9d63c3906a$var$isSubdomain(redirectUrlParts.host, currentHost)) $f09e5f9d63c3906a$var$removeMatchingHeaders(/^(?:authorization|cookie)$/i, this._options.headers);
+    // Evaluate the beforeRedirect callback
+    if (typeof this._options.beforeRedirect === "function") {
+        var responseDetails = {
+            headers: response.headers
+        };
+        try {
+            this._options.beforeRedirect.call(null, this._options, responseDetails);
+        } catch (err) {
+            this.emit("error", err);
+            return;
+        }
+        this._sanitizeOptions(this._options);
+    }
+    // Perform the redirected request
+    try {
+        this._performRequest();
+    } catch (cause1) {
+        this.emit("error", new $f09e5f9d63c3906a$var$RedirectionError(cause1));
     }
 };
 // Wraps the key/value object of protocols with redirect functionality
@@ -4474,8 +4483,7 @@ function $f09e5f9d63c3906a$var$abortRequest(request) {
     request.on("error", $f09e5f9d63c3906a$var$noop);
     request.abort();
 }
-function $f09e5f9d63c3906a$var$isSameOrSubdomain(subdomain, domain) {
-    if (subdomain === domain) return true;
+function $f09e5f9d63c3906a$var$isSubdomain(subdomain, domain) {
     const dot = subdomain.length - domain.length - 1;
     return dot > 0 && subdomain[dot] === "." && subdomain.endsWith(domain);
 }
@@ -5347,7 +5355,7 @@ module.exports = (flag, argv)=>{
 
 parcelRequire.register("fT62h", function(module, exports) {
 module.exports = {
-    "version": "0.26.0"
+    "version": "0.26.1"
 };
 
 });
