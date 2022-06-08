@@ -5028,7 +5028,7 @@ parcelRequire.register("ghEGo", function(module, exports) {
 	*/ createDebug.formatters = {};
     /**
 	* Selects a color for a debug namespace
-	* @param {String} namespace The namespace string for the for the debug instance to be colored
+	* @param {String} namespace The namespace string for the debug instance to be colored
 	* @return {Number|String} An ANSI color code for the given namespace
 	* @api private
 	*/ function selectColor(namespace) {
@@ -5132,7 +5132,7 @@ parcelRequire.register("ghEGo", function(module, exports) {
         for(i = 0; i < len; i++){
             if (!split[i]) continue;
             namespaces = split[i].replace(/\*/g, ".*?");
-            if (namespaces[0] === "-") createDebug.skips.push(new RegExp("^" + namespaces.substr(1) + "$"));
+            if (namespaces[0] === "-") createDebug.skips.push(new RegExp("^" + namespaces.slice(1) + "$"));
             else createDebug.names.push(new RegExp("^" + namespaces + "$"));
         }
     }
